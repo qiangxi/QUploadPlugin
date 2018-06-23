@@ -26,8 +26,7 @@ QUpload {
         accessKey "mUkDpo5_UmJahkVQ6KXpsbWO02xLp1Guj9bS98PE"
         bucket "toutiao"
         fileDir project.buildDir.absolutePath + "${File.separator}outputs${File.separator}apk${File.separator}release"
-        autoUpload true
-        email = ["qren@kalengo.com", "qren@kalengo.com"]
+        autoUpload false
         depends = ['assembleRelease']
         filter "\\S+\\.json"
     }

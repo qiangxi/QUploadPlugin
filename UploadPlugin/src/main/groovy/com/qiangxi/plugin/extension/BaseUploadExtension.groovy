@@ -21,11 +21,6 @@ class BaseUploadExtension {
     boolean autoUpload
 
     /**
-     * 上传成功后邮件通知，可空，空时不进行邮件发送
-     */
-    Iterable<String> email
-
-    /**
      * 上传成功后，返回的url存档路径，可空，空时不存档
      */
     String urlDir
@@ -63,7 +58,6 @@ class BaseUploadExtension {
     String toString() {
         """| fileDir =  ${fileDir}
            | autoUpload = ${autoUpload}
-           | email = ${email}
            | urlDir = ${urlDir}
            | exceptionDir = ${exceptionDir}
            | depends = ${depends}
