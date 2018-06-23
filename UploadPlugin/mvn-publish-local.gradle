@@ -1,0 +1,25 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+
+            groupId 'com.qiangxi'
+            artifactId 'upload-plugin'
+            version '1.0.0'
+
+            from components.java
+
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            // save archive to local dir
+            url uri('D:/maven-local/uploadPluginArchive')
+        }
+    }
+}
+

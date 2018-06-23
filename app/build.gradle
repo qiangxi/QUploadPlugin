@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.qiangxi.upload'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.qiangxi.qnuploadplugin"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+QUpload {
+    uploadEnabled true
+    qiniu {
+        secretKey "Xguanth-ZDWGTMb7M9KeZR56U43hoA4SE53Fs1AF"
+        accessKey "mUkDpo5_UmJahkVQ6KXpsbWO02xLp1Guj9bS98PE"
+        bucket "toutiao"
+        fileDir project.buildDir.absolutePath + "${File.separator}outputs${File.separator}apk${File.separator}release"
+        autoUpload true
+        email = ["qren@kalengo.com", "qren@kalengo.com"]
+        depends = ['assembleRelease']
+        filter "\\S+\\.json"
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    testImplementation 'junit:junit:4.12'
+}

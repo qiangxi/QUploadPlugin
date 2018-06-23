@@ -1,0 +1,22 @@
+apply plugin: 'groovy'
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:2.1.0'
+    implementation 'com.qiniu:qiniu-java-sdk:7.2.12'
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDir 'src/main/groovy'
+        }
+
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+apply from: project.file('mvn-publish-local.gradle')
+//apply from: project.file('mvn-publish-remote.gradle')
