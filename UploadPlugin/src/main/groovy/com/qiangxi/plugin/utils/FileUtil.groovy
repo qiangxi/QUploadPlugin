@@ -22,7 +22,7 @@ class FileUtil {
     /**
      * 解析路径下的所有文件
      */
-    static File[] parseFileWithPath(String path, String filter) {
+    static File[] parseFileWithPath(String path, String[] filter) {
 
         if (CheckUtil.isEmpty(path)) return null
 
@@ -39,7 +39,7 @@ class FileUtil {
     /**
      * 解析路径下的所有文件
      */
-    static File[] parseFileWithFile(File path, String filter) {
+    static File[] parseFileWithFile(File path, String[] filter) {
         if (path == null) return null
 
         if (!path.exists()) return null
@@ -50,7 +50,7 @@ class FileUtil {
 
     }
 
-    private static File[] findFile(File file, String filter) {
+    private static File[] findFile(File file, String[] filter) {
         List<File> temp = new ArrayList<>()
         if (file.isDirectory()) {
             def files = file.listFiles()
@@ -65,9 +65,30 @@ class FileUtil {
         return temp
     }
 
-    private static boolean filterFiles(File file, String filter) {
-        if (CheckUtil.isEmpty(filter)) return true
-        return file.name.matches(filter)
+    private static boolean filterFiles(File file, String[] filter) {
+        if (filter == null || filter.size() == 0) return true
+        def size = filter.size()
+        for (int i = 0; i < size; i++) {
+            final def pattern = convertToPatternString(filter[i])
+            if (file.name.matches(pattern)) return true
+        }
+        return false
+    }
+
+    private static String convertToPatternString(String input) {
+        //convert \\.
+        if (input.contains(".")) {
+            input = input.replaceAll("\\.", "\\\\.")
+        }
+        //convert ？to .
+        if (input.contains("?")) {
+            input = input.replaceAll("\\?", "\\.")
+        }
+        //convert * to.*
+        if (input.contains("*")) {
+            input = input.replace("*", ".*")
+        }
+        return input
     }
 
 }

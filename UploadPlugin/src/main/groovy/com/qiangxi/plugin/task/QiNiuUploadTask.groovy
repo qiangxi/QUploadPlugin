@@ -8,6 +8,7 @@ import com.qiniu.common.QiniuException
 import com.qiniu.storage.Configuration
 import com.qiniu.storage.UploadManager
 import com.qiniu.util.Auth
+
 /**
  * Create by Ray(任强强) on 2018/6/16.
  * 用于上传到七牛云
@@ -21,10 +22,10 @@ class QiNiuUploadTask extends BaseUploadTask {
 
     @Override
     void setupDependenciesIfNeeded() {
-        final def dependsTasks = project.extensions.QUpload.qiniu.depends
-        final def autoUpload = project.extensions.QUpload.qiniu.autoUpload
-        if (autoUpload && dependsTasks != null) {
-            this.dependsOn dependsTasks
+        final def dependsTask = project.extensions.QUpload.qiniu.dependsTask
+        if (dependsTask != null) {
+            def task = project.tasks.findByName(dependsTask)
+            if (task != null && task.enabled) dependsOn task
         }
     }
 
@@ -37,17 +38,18 @@ class QiNiuUploadTask extends BaseUploadTask {
 
         //obtain token
         Auth auth = Auth.create(config.accessKey, config.secretKey)
-        final String upToken = auth.uploadToken(config.bucket)
-        project.logger.error("${TAG}:upToken=${upToken}")
 
         //upload
         Configuration qnConfig = new Configuration()
         UploadManager uploadManager = new UploadManager(qnConfig)
+        project.logger.error("config.fileDir=${config.fileDir}")
         def sourceDir = new File(config.fileDir)
         def files = FileUtil.parseFileWithFile(sourceDir, config.filter)
-        if (files == null) return
-        files.each { uploadFile(uploadManager, it, upToken, config) }
-
+        if (files == null || files.size() == 0) return
+        files.each {
+            final String upToken = auth.uploadToken(config.bucket, it.name)
+            uploadFile(uploadManager, it, upToken, config)
+        }
     }
 
     void uploadFile(UploadManager uploadManager, File file, String upToken, QiNiuUploadExtension config) {

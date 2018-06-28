@@ -18,7 +18,7 @@ publishing {
     repositories {
         maven {
             // save archive to local dir
-            url uri('D:/maven-local/uploadPluginArchive')
+            url uri('C:/maven-local/uploadPluginArchive')
         }
     }
 }

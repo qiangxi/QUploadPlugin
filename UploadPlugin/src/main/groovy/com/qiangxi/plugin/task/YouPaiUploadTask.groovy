@@ -10,10 +10,10 @@ class YouPaiUploadTask extends BaseUploadTask {
 
     @Override
     void setupDependenciesIfNeeded() {
-        final def dependsTasks = project.extensions.QUpload.youpai.depends
-        final def autoUpload = project.extensions.QUpload.youpai.autoUpload
-        if (autoUpload && dependsTasks != null) {
-            this.dependsOn dependsTasks
+        final def dependsTask = project.extensions.QUpload.youpai.dependsTask
+        if (dependsTask != null) {
+            def task = project.tasks.findByName(dependsTask)
+            if (task != null && task.enabled) dependsOn task
         }
     }
 

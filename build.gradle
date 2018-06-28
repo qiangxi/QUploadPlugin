@@ -19,7 +19,7 @@ buildscript {
         google()
         jcenter()
         maven {
-            url uri('D:/maven-local/uploadPluginArchive')
+            url uri('C:/maven-local/uploadPluginArchive')
         }
     }
     dependencies {

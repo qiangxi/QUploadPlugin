@@ -10,10 +10,10 @@ class PuGongYingUploadTask extends BaseUploadTask {
 
     @Override
     void setupDependenciesIfNeeded() {
-        final def dependsTasks = project.extensions.QUpload.pugongying.depends
-        final def autoUpload = project.extensions.QUpload.pugongying.autoUpload
-        if (autoUpload && dependsTasks != null) {
-            this.dependsOn dependsTasks
+        final def dependsTask = project.extensions.QUpload.pugongying.dependsTask
+        if (dependsTask != null) {
+            def task = project.tasks.findByName(dependsTask)
+            if (task != null && task.enabled) dependsOn task
         }
     }
 

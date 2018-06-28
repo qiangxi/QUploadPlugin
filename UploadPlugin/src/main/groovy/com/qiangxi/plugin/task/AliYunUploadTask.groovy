@@ -10,10 +10,10 @@ class AliYunUploadTask extends BaseUploadTask {
 
     @Override
     void setupDependenciesIfNeeded() {
-        final def dependsTasks = project.extensions.QUpload.aliyun.depends
-        final def autoUpload = project.extensions.QUpload.aliyun.autoUpload
-        if (autoUpload && dependsTasks != null) {
-            this.dependsOn dependsTasks
+        final def dependsTask = project.extensions.QUpload.aliyun.dependsTask
+        if (dependsTask != null) {
+            def task = project.tasks.findByName(dependsTask)
+            if (task != null && task.enabled) dependsOn task
         }
     }
 

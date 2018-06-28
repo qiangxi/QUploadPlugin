@@ -29,9 +29,9 @@ abstract class BaseUploadTask extends DefaultTask {
         return project.buildDir.absolutePath + "${File.separator}QUploadPlugin${File.separator}exceptions"
     }
 
-    String getUrlsDir() {
+    String getArchivesDir() {
 
-        return project.buildDir.absolutePath + "${File.separator}QUploadPlugin${File.separator}urls"
+        return project.buildDir.absolutePath + "${File.separator}QUploadPlugin${File.separator}archive"
     }
 
 
