@@ -29,6 +29,35 @@ QUpload {
         dependsTask 'assembleRelease'
         filter = ["*.apk", "*.json"]
     }
+    aliyun {
+        accessKeyId "LTAISuniXBkwkLLh"
+        accessKeySecret "IYXsG8b8KGQ6wIg30vfTVicpZiHw3J"
+        bucketName "qiangxi"
+        savePath "dir1/dir2/"
+        endpoint "oss-cn-beijing.aliyuncs.com"
+        fileDir buildDir.absolutePath + "${File.separator}outputs${File.separator}apk${File.separator}release"
+//        dependsTask 'assembleRelease'
+        filter = ["*.apk", "*.json"]
+    }
+    youpai {
+        operatorName "ray"
+        operatorPwd "qiangxi1234"
+        bucketName "files-upload"
+        savePath "/uploads/{year}{mon}{day}/{random32}{.suffix}"
+        fileDir buildDir.absolutePath + "${File.separator}outputs${File.separator}apk${File.separator}release"
+//        dependsTask 'assembleRelease'
+        filter = ["*.apk", "*.json"]
+    }
+    pugongying {
+        apiKey "cda135532300192535fa1604dc487580"
+        installType 1
+        password "123456"
+        buildName "测试名称"
+        updateDescription "测试测试updateDescription"
+        fileDir buildDir.absolutePath + "${File.separator}outputs${File.separator}apk${File.separator}release"
+//        dependsTask 'assembleRelease'
+        filter = ["*.apk", "*.json"]
+    }
 }
 
 

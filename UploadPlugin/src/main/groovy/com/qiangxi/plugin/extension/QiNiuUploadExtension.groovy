@@ -9,6 +9,7 @@ import org.gradle.api.Project
  * 七牛云上传信息的配置
  */
 class QiNiuUploadExtension extends BaseUploadExtension {
+
     /**
      * 七牛accessKey,必传
      */
@@ -18,6 +19,7 @@ class QiNiuUploadExtension extends BaseUploadExtension {
      * 七牛secretKey,必传
      */
     String secretKey
+
     /**
      * 上传到七牛哪个bucket下,必传
      */
@@ -39,6 +41,5 @@ class QiNiuUploadExtension extends BaseUploadExtension {
         if (CheckUtil.isEmpty(bucket)) {
             throw new GradleException("bucket must not be null or empty")
         }
-
     }
 }

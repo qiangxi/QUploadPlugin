@@ -3,7 +3,12 @@ apply plugin: 'groovy'
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
-    implementation 'com.qiniu:qiniu-java-sdk:7.2.12'
+    implementation 'com.qiniu:qiniu-java-sdk:7.2.12'//七牛云对象存储sdk
+    implementation 'com.aliyun.oss:aliyun-sdk-oss:2.8.3'//阿里云对象存储sdk
+    implementation 'com.upyun:java-sdk:4.0.1'//又拍云对象存储sdk
+    //Retrofit三个包的版本号必须一样，目前仅用于蒲公英上传
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
 }
 
 sourceSets {
