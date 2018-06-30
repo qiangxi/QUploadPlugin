@@ -1,17 +1,12 @@
 package com.qiangxi.plugin.task
 
-import com.google.gson.Gson
 import com.qiangxi.plugin.exception.UploadException
 import com.qiangxi.plugin.extension.PuGongYingUploadExtension
 import com.qiangxi.plugin.utils.CheckUtil
 import com.qiangxi.plugin.utils.FileUtil
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.RequestBody
+import okhttp3.*
 import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -47,7 +42,7 @@ class PuGongYingUploadTask extends BaseUploadTask {
         def sourceDir = new File(config.fileDir)
         def files = FileUtil.parseFileWithFile(sourceDir, config.filter)
         if (files == null || files.size() == 0) return
-
+        project.logger.error("${TAG}:uploading...")
         def builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("_api_key", config.apiKey)
@@ -62,19 +57,17 @@ class PuGongYingUploadTask extends BaseUploadTask {
             def call = generatePGYService().upload(builder.build())
             def response = call.execute()
             if (response.successful) {
-
-                def json = new Gson().toJson(response.body())
-                //save exception to local file .
+                //save callback json to local file .
                 def fileDir = CheckUtil.isEmpty(config.archiveDir) ? getArchivesDir() : config.archiveDir
-                FileUtil.stringToFile(fileDir, "PuGongYingArchive", json)
-                project.logger.error("${TAG}:uploadFile->${it.name} upload success,返回内容请查看${fileDir}中PuGongYingArchive开头的日志文件")
+                FileUtil.stringToFile(fileDir, "PuGongYingArchive", response.body().string(), FileUtil.JSON_SUFFIX)
+                project.logger.error("${TAG}:uploadFile->${it.name} upload success,返回内容请查看${fileDir}中PuGongYingArchive开头的json文件")
             } else {
 
                 //save exception to local file .
                 def fileDir = CheckUtil.isEmpty(config.exceptionDir) ? getExceptionsDir() : config.exceptionDir
                 def errorMsg = response.toString()
                 project.logger.error("${TAG}:PuGongYingException=${errorMsg}")
-                FileUtil.stringToFile(fileDir, "PuGongYingException", errorMsg)
+                FileUtil.stringToFile(fileDir, "PuGongYingException", errorMsg, FileUtil.TXT_SUFFIX)
 
                 // throw new Exception to notify developer
                 throw new UploadException("上传蒲公英异常，请查看${fileDir}中PuGongYingException开头的日志文件")
@@ -85,7 +78,6 @@ class PuGongYingUploadTask extends BaseUploadTask {
     static PGYService generatePGYService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.pgyer.com/")
-                .addConverterFactory(GsonConverterFactory.create())
                 .client(getOkHttpClient())
                 .build()
         return retrofit.create(PGYService.class)
@@ -103,27 +95,5 @@ class PuGongYingUploadTask extends BaseUploadTask {
 
 interface PGYService {
     @POST("apiv2/app/upload")
-    Call<PGYResponse> upload(@Body RequestBody body)
-}
-
-class PGYResponse {
-    String buildKey
-    String buildType
-    int buildIsFirst
-    int buildIsLastest
-    int buildFileSize
-    int appFileSize
-    String buildName
-    String buildVersion
-    String buildVersionNo
-    int buildBuildVersion
-    String buildIdentifier
-    String buildIcon
-    String buildDescription
-    String buildUpdateDescription
-    String buildScreenShots
-    String buildShortcutUrl
-    String buildQRCodeURL
-    String buildCreated
-    String buildUpdated
+    Call<ResponseBody> upload(@Body RequestBody body)
 }

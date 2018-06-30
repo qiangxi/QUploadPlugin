@@ -22,40 +22,40 @@ android {
 QUpload {
     uploadEnabled true
     qiniu {
-        secretKey "Xguanth-ZDWGTMb7M9KeZR56U43hoA4SE53Fs1AF"
-        accessKey "mUkDpo5_UmJahkVQ6KXpsbWO02xLp1Guj9bS98PE"
-        bucket "toutiao"
+        secretKey ""
+        accessKey ""
+        bucket ""
         fileDir buildDir.absolutePath + "${File.separator}outputs${File.separator}apk${File.separator}release"
         dependsTask 'assembleRelease'
         filter = ["*.apk", "*.json"]
     }
     aliyun {
-        accessKeyId "LTAISuniXBkwkLLh"
-        accessKeySecret "IYXsG8b8KGQ6wIg30vfTVicpZiHw3J"
-        bucketName "qiangxi"
-        savePath "dir1/dir2/"
-        endpoint "oss-cn-beijing.aliyuncs.com"
+        accessKeyId ""
+        accessKeySecret ""
+        bucketName ""
+        savePath ""
+        endpoint ""
         fileDir buildDir.absolutePath + "${File.separator}outputs${File.separator}apk${File.separator}release"
-//        dependsTask 'assembleRelease'
+        dependsTask 'assembleRelease'
         filter = ["*.apk", "*.json"]
     }
-    youpai {
-        operatorName "ray"
-        operatorPwd "qiangxi1234"
-        bucketName "files-upload"
+    upyun {
+        operatorName ""
+        operatorPwd ""
+        bucketName ""
         savePath "/uploads/{year}{mon}{day}/{random32}{.suffix}"
         fileDir buildDir.absolutePath + "${File.separator}outputs${File.separator}apk${File.separator}release"
-//        dependsTask 'assembleRelease'
+        dependsTask 'assembleRelease'
         filter = ["*.apk", "*.json"]
     }
     pugongying {
-        apiKey "cda135532300192535fa1604dc487580"
+        apiKey ""
         installType 1
-        password "123456"
+        password ""
         buildName "测试名称"
         updateDescription "测试测试updateDescription"
         fileDir buildDir.absolutePath + "${File.separator}outputs${File.separator}apk${File.separator}release"
-//        dependsTask 'assembleRelease'
+        dependsTask 'assembleRelease'
         filter = ["*.apk", "*.json"]
     }
 }

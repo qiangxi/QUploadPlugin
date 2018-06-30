@@ -26,7 +26,7 @@ class UploadPlugin implements Plugin<Project> {
         project.QUpload.extensions.create("aliyun", AliYunUploadExtension, project)
         project.QUpload.extensions.create("pugongying", PuGongYingUploadExtension, project)
         project.QUpload.extensions.create("qiniu", QiNiuUploadExtension, project)
-        project.QUpload.extensions.create("youpai", YouPaiUploadExtension, project)
+        project.QUpload.extensions.create("upyun", YouPaiUploadExtension, project)
 
         project.afterEvaluate {
 

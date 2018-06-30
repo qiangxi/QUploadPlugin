@@ -3,13 +3,16 @@ package com.qiangxi.plugin.utils
  * Create by Ray(任强强) on 2018/6/16.
  */
 class FileUtil {
+    public static final String JSON_SUFFIX = ".json"
+    public static final String TXT_SUFFIX = ".txt"
 
-    static void stringToFile(String path, String fileName, String msg) {
+
+    static void stringToFile(String path, String fileName, String msg, String suffix) {
         if (CheckUtil.isEmpty(path) || CheckUtil.isEmpty(fileName) || CheckUtil.isEmpty(msg)) return
         File dir = new File(path)
         if (!dir.exists()) dir.mkdirs()
 
-        def realFileName = fileName + "-" + DateUtil.format(System.currentTimeMillis())
+        def realFileName = fileName + "-" + DateUtil.format(System.currentTimeMillis()) + suffix
         File file = new File(dir, realFileName)
 
         FileWriter writer = new FileWriter(file)

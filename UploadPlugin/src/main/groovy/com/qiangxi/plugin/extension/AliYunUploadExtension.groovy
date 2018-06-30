@@ -32,7 +32,7 @@ class AliYunUploadExtension extends BaseUploadExtension {
     String endpoint
 
     /**
-     * 上传的文件要保存到又拍云的哪个路径下，非必填，如“dir1/dir2/dir3/”
+     * 上传的文件要保存到阿里云的哪个路径下，非必填，如“dir1/dir2/dir3/”
      */
     String savePath
 

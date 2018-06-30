@@ -1,0 +1,95 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+def getBintrayUser() {
+    return hasProperty('BINTRAY_USER') ? BINTRAY_USER : readPropertyFromLocalProperties('BINTRAY_USER')
+}
+
+def getBintrayKey() {
+    return hasProperty('BINTRAY_APIKEY') ? BINTRAY_APIKEY : readPropertyFromLocalProperties('BINTRAY_APIKEY')
+}
+
+def readPropertyFromLocalProperties(String key) {
+    Properties properties = new Properties()
+    try {
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    } catch (Exception e) {
+        println("load local properties failed msg:${e.message}")
+    }
+    return properties.getProperty(key)
+}
+
+def siteUrl = 'https://github.com/qiangxi/QUploadPlugin'      // 项目的主页
+def gitUrl = 'https://github.com/qiangxi/QUploadPlugin.git'   // Git仓库的url
+group = "com.qiangxi"
+version = "1.0.1"
+install {
+    repositories.mavenInstaller {
+
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'jar'
+                // Add your description here
+                name 'a gradle plugin ,for upload files to qiniu、pugongying、aliyun、youpai and so on'
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'qiang_xi'
+                        name 'renqiangqiang(Ray)'
+                        email 'renqiangqiang.china@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadocEncoding(type: Javadoc) {
+    source = sourceSets.main.java.srcDirs
+    options.encoding = "utf-8"
+}
+
+task javadocJar(type: Jar, dependsOn: javadocEncoding) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+bintray {
+    user = getBintrayUser()
+    key = getBintrayKey()
+    configurations = ['archives']
+
+    pkg {
+        repo = "QUploadPlugin"
+        name = "QUploadPlugin"
+        licenses = ["Apache-2.0"]
+        vcsUrl = gitUrl
+        websiteUrl = siteUrl
+        publicDownloadNumbers = true
+        publish = true
+        dryRun = false
+    }
+}

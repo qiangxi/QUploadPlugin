@@ -46,6 +46,7 @@ class QiNiuUploadTask extends BaseUploadTask {
         def sourceDir = new File(config.fileDir)
         def files = FileUtil.parseFileWithFile(sourceDir, config.filter)
         if (files == null || files.size() == 0) return
+        project.logger.error("${TAG}:uploading...")
         files.each {
             final String upToken = auth.uploadToken(config.bucket, it.name)
             uploadFile(uploadManager, it, upToken, config)
@@ -67,7 +68,7 @@ class QiNiuUploadTask extends BaseUploadTask {
                 errorMsg = exception.toString()
             }
             project.logger.error("${TAG}:QiniuException=${errorMsg}")
-            FileUtil.stringToFile(fileDir, "QiniuException", errorMsg)
+            FileUtil.stringToFile(fileDir, "QiniuException", errorMsg, FileUtil.TXT_SUFFIX)
 
             // throw new Exception to notify developer
             throw new UploadException("上传七牛云异常，请查看${fileDir}中QiniuException开头的日志文件")

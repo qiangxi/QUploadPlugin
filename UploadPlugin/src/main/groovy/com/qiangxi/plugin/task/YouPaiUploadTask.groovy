@@ -21,7 +21,7 @@ class YouPaiUploadTask extends BaseUploadTask {
 
     @Override
     void setupDependenciesIfNeeded() {
-        final def dependsTask = project.extensions.QUpload.youpai.dependsTask
+        final def dependsTask = project.extensions.QUpload.upyun.dependsTask
         if (dependsTask != null) {
             def task = project.tasks.findByName(dependsTask)
             if (task != null && task.enabled) dependsOn task
@@ -32,7 +32,7 @@ class YouPaiUploadTask extends BaseUploadTask {
     void upload() {
 
         //ensure params
-        YouPaiUploadExtension extension = project.extensions.QUpload.youpai
+        YouPaiUploadExtension extension = project.extensions.QUpload.upyun
         extension.checkParams()
 
         //upload
@@ -42,6 +42,7 @@ class YouPaiUploadTask extends BaseUploadTask {
         def sourceDir = new File(extension.fileDir)
         def files = FileUtil.parseFileWithFile(sourceDir, extension.filter)
         if (files == null || files.size() == 0) return
+        project.logger.error("${TAG}:uploading...")
         files.each {
 
             def result = uploader.upload(paramMap, it)
@@ -51,7 +52,7 @@ class YouPaiUploadTask extends BaseUploadTask {
                 //save exception to local file .
                 def fileDir = CheckUtil.isEmpty(extension.exceptionDir) ? getExceptionsDir() : extension.exceptionDir
                 project.logger.error("${TAG}:YoupaiException=${result.toString()}")
-                FileUtil.stringToFile(fileDir, "YoupaiException", result.toString())
+                FileUtil.stringToFile(fileDir, "YoupaiException", result.toString(), FileUtil.TXT_SUFFIX)
 
                 // throw new Exception to notify developer
                 throw new UploadException("上传又拍云异常，请查看${fileDir}中YoupaiException开头的日志文件")
