@@ -91,7 +91,7 @@ dependencies {
 - gradlew YouPaiUploadTask AliYunUploadTask PuGongYingUploadTask YouPaiUploadTask
 
 #####  IDEA控制面板双击执行
-![IDEA右侧控制面板]()
+![IDEA右侧控制面板](https://github.com/qiangxi/QUploadPlugin/blob/master/img/IDEA.png?raw=true)
 
 ### 上传功能的配置
 ##### 所有上传方式都有的配置：
