@@ -189,7 +189,7 @@ savePath|String|是|上传的文件要保存到又拍云的哪个路径下，必
 ```groovy
 QUpload {
 
-   youpai {
+   upyun {
        operatorName "xxxxx"
        operatorPwd "xxxxx"
        bucketName "xxxxxx"
