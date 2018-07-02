@@ -20,5 +20,5 @@ sourceSets {
         }
     }
 }
-//apply from: project.file('mvn-publish-local.gradle')
+//apply from: project.file('publish-to-local.gradle')
 apply from: project.file('publish-to-bintray.gradle')

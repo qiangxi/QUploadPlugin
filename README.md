@@ -1,6 +1,8 @@
 # QUploadPlugin
 QUploadPlugin 是一个gradle插件，适用于所有以gradle管理的项目中，如Android项目、Java web项目等。
 
+[ ![Download](https://api.bintray.com/packages/qiangxi19931994/QUploadPlugin/QUploadPlugin/images/download.svg) ](https://bintray.com/qiangxi19931994/QUploadPlugin/QUploadPlugin/_latestVersion)
+
 ### QUploadPlugin包含的功能
 - 上传指定文件到七牛云，文件可以为任意格式，如图片、json文件、apk文件、war文件、jar文件等
 - 上传指定文件到蒲公英，由于蒲公英是为移动端的apk或ipa做分发的，貌似仅支持apk或ipa文件
@@ -39,7 +41,7 @@ buildscript {
     }
     dependencies {
         ...
-        classpath 'com.qiangxi:upload-plugin:1.0.0'
+        classpath 'com.qiangxi:UploadPlugin:1.0.1'
         ...
     }
 }

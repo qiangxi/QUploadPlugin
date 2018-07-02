@@ -1,12 +1,12 @@
 apply plugin: 'maven-publish'
-
+//执行命令：gradlew publish
 publishing {
     publications {
         mavenJava(MavenPublication) {
 
             groupId 'com.qiangxi'
-            artifactId 'upload-plugin'
-            version '1.0.0'
+            artifactId 'UploadPlugin'
+            version '1.0.1'
 
             from components.java
 

@@ -1,6 +1,6 @@
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
-
+//执行命令：gradlew uploadArchive
 def getBintrayUser() {
     return hasProperty('BINTRAY_USER') ? BINTRAY_USER : readPropertyFromLocalProperties('BINTRAY_USER')
 }
